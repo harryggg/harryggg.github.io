@@ -121,12 +121,18 @@
                 });
             });
             $(".hide_button").click(function() {
-                $(".progress-chart-box").animate({
-                    width: "100%"
-                }, 300);
-                $(".code-review-box").animate({
-                    width: "0%"
-                }, 300);
+                $(".report-frame").attr('src', 'about:blank')
+                setTimeout((function(){
+                    $(".progress-chart-box").animate({
+                        width: "100%"
+                    }, 300);
+                    $(".code-review-box").animate({
+                        width: "0%"
+                    }, 300);
+                    
+                }),200);
+                
+                
             })
         });
         $(function() {
