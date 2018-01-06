@@ -49,6 +49,10 @@ pre {
 	overflow: hidden;
 }
 
+code {
+    overflow: hidden;
+}
+
 div.progress-chart-box {
     float:left;
 }
