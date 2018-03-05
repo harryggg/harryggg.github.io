@@ -65,10 +65,12 @@ div.progress-chart-tool {
 }
 
 div.filter-row {
+    float:left;
+    border-color: coral;
 }
 
 div.progress-chart-main {
-    height:80%;
+    height:90%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -90,6 +92,11 @@ a.detail_link {
     right: 0px;
 }
 
+
+h4.author_name_tag {
+    margin:0px;
+}
+
 h4.author_name_tag:hover {
     text-decoration: underline;
 }
@@ -109,4 +116,12 @@ div.spectrum {
     height:30px;
     background-color:#deebf6;
     position: relative;
+}
+
+code::-webkit-scrollbar {
+    display:none;
+}
+
+label {
+    margin-right: 10px;
 }
