@@ -14,6 +14,13 @@ div.author-name-menu-container {
 
 }
 
+div.toolbar {
+    padding: 4px; 
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    height:5%
+}
+
 div.code-container {
 
 }
@@ -112,7 +119,7 @@ div.slice {
 }
 
 div.spectrum {
-    width:100%;
+    width:95%;
     height:30px;
     background-color:#deebf6;
     position: relative;
