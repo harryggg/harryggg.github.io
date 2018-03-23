@@ -1,4 +1,4 @@
-var getQueryVariable = function(variable) {
+var getQueryVariable = function(variable, defaultValue) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
@@ -7,7 +7,26 @@ var getQueryVariable = function(variable) {
             return decodeURI(pair[1]);
         }
     }
-    return null;
+    return defaultValue;
+}
+
+function copyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
 }
 
 var getLegalClassName = function(original) {
@@ -36,9 +55,9 @@ function getScaleLimit(intervalType) {
         for (author in summaryJson[repo][intervalType]) {
             for (i in summaryJson[repo][intervalType][author]) {
                 currentPeriod = summaryJson[repo][intervalType][author][i];
-                if (totalContribution['insertions'] != 0){
+                if (totalContribution['insertions'] != 0) {
                     totalContribution += currentPeriod['insertions'];
-                    count += 1 
+                    count += 1
                 }
 
             }
@@ -53,12 +72,12 @@ function getIntervalCount(intervalType, minDate, maxDate) {
     var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
     var diffDays = Math.round(Math.abs((minDateParsed.getTime() - maxDateParsed.getTime()) / (oneDay)));
-    if (intervalType == "authorWeeklyIntervalContributions"){
+    if (intervalType == "authorWeeklyIntervalContributions") {
         var divisor = 7;
-    }else {
+    } else {
         var divisor = 1;
     }
-    return diffDays/divisor;
+    return diffDays / divisor;
 }
 
 function getTotalContributionLimit() {
@@ -89,14 +108,25 @@ function flatten(authorRepos) {
 }
 
 function sortSegment(segment, sortElement, sortOrder) {
-
     if (sortOrder == "high2low") {
         segment.sort(function(a, b) {
-            return b[sortElement] - a[sortElement];
+            if (b[sortElement] > a[sortElement]){
+                return 1;
+            } else if (b[sortElement] > a[sortElement]){
+                return -1
+            } else{
+                return 0;
+            }
         })
     } else {
         segment.sort(function(a, b) {
-            return a[sortElement] - b[sortElement];
+            if (a[sortElement] > b[sortElement]){
+                return 1;
+            } else if (a[sortElement] > b[sortElement]){
+                return -1
+            } else{
+                return 0;
+            }
         })
     }
     return segment;
@@ -132,7 +162,7 @@ function isMatch(searchTerm, currentPhrase) {
 
 function getMinDate() {
     rawDate = summaryJson[Object.keys(summaryJson)[0]]["fromDate"];
-    if (rawDate){
+    if (rawDate) {
         //the fromDate has been set
         console.log(Date.parse(rawDate))
         console.log(Date.parse(rawDate).toString("M/d/yy"))
@@ -166,6 +196,7 @@ function getMaxDate() {
         var result;
         for (var i in summaryJson) {
             var authorContributions = summaryJson[i]["authorDailyIntervalContributions"];
+            if (Object.keys(authorContributions).length == 0) continue;
             var authorIntervals = authorContributions[Object.keys(authorContributions)[0]];
             var currentRawDate = authorIntervals[authorIntervals.length - 1]["toDate"];
             var currentDate = Date.parse(currentRawDate);
@@ -179,4 +210,8 @@ function getMaxDate() {
         }
         return result.toString("M/d/yy");
     }
+}
+
+function isNotAuthored(currentAuthor,line){
+    return currentAuthor==null || line.author == null || line.author.gitID != currentAuthor;
 }

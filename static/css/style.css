@@ -2,10 +2,14 @@ html, body{
     height: 100%;
 }
 
+
 body.main-app{
     overflow: hidden;
 }
 
+div.highlighted_block{
+    background-color: Silver;
+}
 
 div.author-name-menu-container {
 	width: 15vw;
@@ -100,14 +104,20 @@ a.detail_link {
 }
 
 
-h4.author_name_tag {
+h5.author_name_tag {
     margin:0px;
+    padding: 0px;
 }
 
 h4.author_name_tag:hover {
     text-decoration: underline;
 }
 
+div.contributionBar {
+    margin:0px;
+    padding: 0px;
+
+}
 
 div.slice {
     position:absolute;
@@ -123,6 +133,7 @@ div.spectrum {
     height:30px;
     background-color:#deebf6;
     position: relative;
+    margin-bottom: 0px;
 }
 
 code::-webkit-scrollbar {
