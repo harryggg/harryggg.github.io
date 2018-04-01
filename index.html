@@ -21,8 +21,6 @@
         var sliceScaleLimitMap = getScaleLimitMap();
         var minDateRange = getMinDate();
         var maxDateRange = getMaxDate();
-        var minDateValue = getQueryVariable("minDate") == null ? minDateRange : getQueryVariable("minDate");
-        var maxDateValue = getQueryVariable("maxDate") == null ? maxDateRange : getQueryVariable("maxDate")
         Vue.component('date-picker', {
             template: '<input size="8"/>',
             props: ['defaultDate'],
@@ -33,7 +31,6 @@
                 $(this.$el).datepicker({
                     minDate: minDateParsed,
                     maxDate: maxDateParsed,
-                    defaultDate: this.defaultDate,
                     dateFormat: "mm/dd/y",
                     onSelect: function(date) {
                         self.$emit('update-date', date);
@@ -54,8 +51,8 @@
                     searchTerm: getQueryVariable("searchTerm",""),
                     intervalType: getQueryVariable("intervalType","authorDailyIntervalContributions"),
                     isGroupByRepo: (getQueryVariable("isGroupByRepo","true")=="true"),
-                    minDate: minDateValue,
-                    maxDate: maxDateValue,
+                    minDate: minDateRange,
+                    maxDate: maxDateRange,
                 },
                 methods: vueMethods
             });
@@ -93,8 +90,8 @@
         });
         $(function() {
             $(document).tooltip();
-            $("#minDatePicker").val(minDateValue);
-            $("#maxDatePicker").val(maxDateValue);
+            $("#minDatePicker").val(minDateRange);
+            $("#maxDatePicker").val(maxDateRange);
 
         });
     </script>
@@ -102,7 +99,7 @@
 
 <body class="main-app">
     <div id="vue-app">
-        <div style="right:1%;top:0%;position:absolute;" class="bookmark_button" v-bind:onclick="generateBookmark(searchTerm,sortElement,sortOrder,isGroupByRepo,intervalType,minDate,maxDate)"><img src="static/img/bookmark.png" height="45px" width="30px" /></div>
+        <div style="right:0.5%;top:0.5%;position:absolute;" class="bookmark_button" v-bind:onclick="generateBookmark(searchTerm,sortElement,sortOrder,isGroupByRepo,intervalType)"><img src="static/img/link.png" height="25px" width="25px" /></div>
         <div class="toolbar" style="">
             <div class="filter-row">
                     <label>Sort By:</label>
@@ -148,7 +145,7 @@
     </div>
     </div>
     <div class="code-review-box" style="width:0%;position:relative;">
-        <div style="left:2%;top:2%;position:absolute;" class="hide_button"><img src="static/img/right_arrow.png" height="30px" width="30px" /></div>
+        <div style="left:2px;top:35%;position:absolute;" class="hide_button"><img src="static/img/right.png" height="30%" width="10px" /></div>
         <iframe class="report-frame" src="about:blank" style="height:100%;width: 100%"></iframe>
     </div>
     </div>
